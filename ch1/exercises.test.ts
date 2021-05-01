@@ -4,7 +4,8 @@ import {
   Q2_checkPermutation,
   Q3_URLify,
   Q4_palindromePermutations,
-  Q5_oneAway
+  Q5_oneAway,
+  Q6_stringCompression
 } from "./exercises.ts";
 
 Deno.test("Q1: Is Unique", () => {
@@ -35,4 +36,10 @@ Deno.test('Q5: One Away', () => {
   assertEquals(Q5_oneAway('pales', 'pale'), true);
   assertEquals(Q5_oneAway('pale', 'bale'), true);
   assertEquals(Q5_oneAway('pale', 'bake'), false);
+})
+
+Deno.test('Q6: String Compression', () => {
+  assertEquals(Q6_stringCompression('aabcccccaaa'), 'a2b1c5a3');
+  assertEquals(Q6_stringCompression(''), '');
+  assertEquals(Q6_stringCompression('abcdefgh'), 'abcdefgh');
 })

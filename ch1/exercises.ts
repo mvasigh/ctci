@@ -110,3 +110,22 @@ export function Q5_oneAway(a: string, b: string): boolean {
 
   return oneAway(a, b);
 }
+
+export function Q6_stringCompression(str: string): string {
+  let compressed = "";
+  let char;
+  let count = 0;
+
+  for (let i = 0; i <= str.length; i++) {
+    const currChar = str[i];
+    if (!char || currChar === char) {
+      count += 1;
+    } else {
+      compressed += char + count;
+      count = 1;
+    }
+    char = currChar;
+  }
+
+  return compressed.length < str.length ? compressed : str;
+}
