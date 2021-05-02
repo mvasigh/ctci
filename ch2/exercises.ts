@@ -96,7 +96,6 @@ export class LinkedList {
   }
 }
 
-// TODO
 export function Q1_removeDups(list: LinkedList) {
   const seen = new Set();
 
@@ -105,12 +104,21 @@ export function Q1_removeDups(list: LinkedList) {
   }
 
   let n = list.head;
-  while (n.next) {
-    if (seen.has(n.data)) {
-      // If I've seen this value before, I want to remove the node
-    } else {
-      // If it's a new value, store it in the set
+  while (n) {
+    seen.add(n.data);
+
+    let next = n.next;
+
+    while (next && seen.has(next.data)) {
+      next = next.next;
     }
+
+    n.next = next;
+
+    if (!n.next) {
+      break;
+    }
+
     n = n.next;
   }
 }
