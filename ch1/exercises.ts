@@ -129,3 +129,53 @@ export function Q6_stringCompression(str: string): string {
 
   return compressed.length < str.length ? compressed : str;
 }
+
+export function Q7_rotateMatrix(
+  matrix: Array<Array<number>>
+): Array<Array<number>> {
+  // We can assume a square N x N matrix
+  const rotated = Array(matrix.length)
+    .fill(null)
+    .map(() =>
+      Array(matrix.length)
+        .fill(null)
+        .map(() => 0)
+    );
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix.length; j++) {
+      rotated[matrix.length - j - 1][i] = matrix[i][j];
+    }
+  }
+
+  return rotated;
+}
+
+export function Q8_zeroMatrix(
+  matrix: Array<Array<number>>
+): Array<Array<number>> {
+  if (!matrix.length) {
+    return matrix;
+  }
+
+  const zeroedRows = new Set();
+  const zeroedCols = new Set();
+
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[0].length; col++) {
+      if (zeroedRows.has(row) || zeroedCols.has(col)) {
+        continue;
+      }
+
+      if (matrix[row][col] === 0) {
+        zeroedRows.add(row);
+        zeroedCols.add(col);
+
+        matrix[row] = matrix[row].map(() => 0);
+        matrix.forEach(row => row[col] = 0);
+      }
+    }
+  }
+
+  return matrix;
+}
