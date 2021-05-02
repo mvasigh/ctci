@@ -167,8 +167,8 @@ export function Q8_zeroMatrix(
         zeroedRows.add(row);
         zeroedCols.add(col);
 
-        matrix[row] = matrix[row].map(() => 0);
-        matrix.forEach(row => row[col] = 0);
+        matrix[row].forEach((_, i) => (matrix[row][i] = 0));
+        matrix.forEach((row) => (row[col] = 0));
       }
     }
   }
