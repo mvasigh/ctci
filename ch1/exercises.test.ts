@@ -8,6 +8,7 @@ import {
   Q6_stringCompression,
   Q7_rotateMatrix,
   Q8_zeroMatrix,
+  Q9_stringRotation
 } from "./exercises.ts";
 
 Deno.test("Q1: Is Unique", () => {
@@ -74,3 +75,7 @@ Deno.test("Q8: Zero Matrix", () => {
   assertEquals(Q8_zeroMatrix(original), expected);
   assertEquals(Q8_zeroMatrix([]), []);
 });
+
+Deno.test("Q9: String Rotation", () => {
+  assertEquals(Q9_stringRotation('waterbottle', 'erbottlewat'), true)
+})

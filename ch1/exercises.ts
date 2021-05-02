@@ -154,24 +154,40 @@ export function Q7_rotateMatrix(
 export function Q8_zeroMatrix(
   matrix: Array<Array<number>>
 ): Array<Array<number>> {
-  const zeroedRows = new Set();
-  const zeroedCols = new Set();
+  const zeroedRows = new Set<number>();
+  const zeroedCols = new Set<number>();
 
   for (let row = 0; row < matrix.length; row++) {
     for (let col = 0; col < matrix[0].length; col++) {
-      if (zeroedRows.has(row) || zeroedCols.has(col)) {
-        continue;
-      }
-
       if (matrix[row][col] === 0) {
         zeroedRows.add(row);
         zeroedCols.add(col);
-
-        matrix[row].forEach((_, i) => (matrix[row][i] = 0));
-        matrix.forEach((row) => (row[col] = 0));
       }
     }
   }
 
+  for (let row of zeroedRows) {
+    matrix[row].forEach((_, col) => (matrix[row][col] = 0));
+  }
+
+  for (let col of zeroedCols) {
+    matrix.forEach((row) => (row[col] = 0));
+  }
+
   return matrix;
+}
+
+export function Q9_stringRotation(s1: string, s2: string): boolean {
+  function isSubstring(str: string, substr: string) {
+    return str.includes(substr);
+  }
+
+  function isRotation(s1: string, s2: string) {
+    if (s1.length !== s2.length) return false;
+    if (!s1.length || !s2.length) return false;
+
+    return isSubstring(s1 + s1, s2);
+  }
+
+  return isRotation(s1, s2);
 }
