@@ -154,10 +154,6 @@ export function Q7_rotateMatrix(
 export function Q8_zeroMatrix(
   matrix: Array<Array<number>>
 ): Array<Array<number>> {
-  if (!matrix.length) {
-    return matrix;
-  }
-
   const zeroedRows = new Set();
   const zeroedCols = new Set();
 

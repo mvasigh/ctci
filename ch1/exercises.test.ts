@@ -72,4 +72,5 @@ Deno.test("Q8: Zero Matrix", () => {
   ];
 
   assertEquals(Q8_zeroMatrix(original), expected);
+  assertEquals(Q8_zeroMatrix([]), []);
 });
