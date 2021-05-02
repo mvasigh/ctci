@@ -69,5 +69,48 @@ export class LinkedList {
       n.print();
     }
   }
+
+  toArray(): Array<any> {
+    const array: any[] = [];
+
+    if (!this.head) return array;
+
+    let n = this.head;
+    while (n.next) {
+      array.push(n.data);
+      n = n.next;
+    }
+    array.push(n.data);
+
+    return array;
+  }
+
+  static from(array: Array<any>, isDoublyLinked: boolean = false): LinkedList {
+    const list = new LinkedList(isDoublyLinked);
+
+    for (let el of array) {
+      list.append(el);
+    }
+
+    return list;
+  }
 }
 
+// TODO
+export function Q1_removeDups(list: LinkedList) {
+  const seen = new Set();
+
+  if (!list.head) {
+    return list;
+  }
+
+  let n = list.head;
+  while (n.next) {
+    if (seen.has(n.data)) {
+      // If I've seen this value before, I want to remove the node
+    } else {
+      // If it's a new value, store it in the set
+    }
+    n = n.next;
+  }
+}
