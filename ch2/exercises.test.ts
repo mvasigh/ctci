@@ -1,5 +1,5 @@
 import * as asserts from "https://deno.land/std@0.95.0/testing/asserts.ts";
-import { LinkedList, Q1_removeDups } from "./exercises.ts";
+import { LinkedList, Node, Q1_removeDups, Q2_returnKthToLast, Q3_deleteMiddleNode, Q4_partition } from "./exercises.ts";
 
 Deno.test("Singly Linked List", () => {
   const list = new LinkedList();
@@ -24,21 +24,21 @@ Deno.test("Q1: Remove Dups", () => {
   const tests = [
     {
       original: [1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 6, 1],
-      expected: [1, 2, 3, 4, 5, 6]
+      expected: [1, 2, 3, 4, 5, 6],
     },
     {
       original: [1, 1, 2, 1],
-      expected: [1, 2]
+      expected: [1, 2],
     },
     {
       original: [2, 2, 2, 1],
-      expected: [2, 1]
+      expected: [2, 1],
     },
     {
       original: [],
-      expected: []
+      expected: [],
     },
-  ]
+  ];
 
   for (let { original, expected } of tests) {
     const list = LinkedList.from(original);
@@ -47,3 +47,39 @@ Deno.test("Q1: Remove Dups", () => {
     asserts.assertEquals(list.toArray(), expected);
   }
 });
+
+Deno.test("Q2: Return Kth To Last", () => {
+  const list = LinkedList.from([1, 2, 3, 4, 5]);
+  const expected = 4;
+
+  asserts.assertEquals(Q2_returnKthToLast(list, 1)?.data, expected);
+});
+
+Deno.test('Q3: Delete Middle Node', () => {
+  const list = LinkedList.from([1, 2, 3, 4]);
+  const node = list.head?.next as Node;
+
+  Q3_deleteMiddleNode(node);
+
+  list.print();
+})
+
+Deno.test('Q4: Partition', () => {
+  const partitionVal = 10;
+  const list = LinkedList.from([1, 2, 8, 0, 44, 12, 3, 8, 9]);
+  const result = Q4_partition(list, 10);
+
+  let partitioned = false;
+  let node = result.head as Node;
+
+  while (node) {
+    if (node.data >= partitionVal && !partitioned) {
+      partitioned = true;
+    }
+
+    asserts.assertEquals(node.data >= partitionVal, partitioned);
+
+    if (!node.next) break;
+    node = node.next;
+  }
+})
