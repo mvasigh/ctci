@@ -167,7 +167,7 @@ export function Q3_deleteMiddleNode(node: Node) {
 
 export function Q4_partition(list: LinkedList, val: number): LinkedList {
   if (!list.head) {
-    throw new Error('Empty linked list provided');
+    throw new Error("Empty linked list provided");
   }
 
   const lowerPartition = new LinkedList();
@@ -189,4 +189,42 @@ export function Q4_partition(list: LinkedList, val: number): LinkedList {
     lowerPartition.tail.next = upperPartition.head;
     return lowerPartition;
   }
+}
+
+export function Q5_sumLists(listA: LinkedList, listB: LinkedList): LinkedList {
+  function reduceList(list: LinkedList): number {
+    let pow = 0;
+    let val = 0;
+    let n = list.head;
+    
+    while (n) {
+      if (n.data >= 10 || n.data < 0) {
+        throw new Error("Must be a single-digit integer");
+      }
+
+      val += n.data * 10 ** pow;
+      pow += 1;
+      n = n.next;
+    }
+    return val;
+  }
+
+  function expandToList(num: number): LinkedList {
+    let pow = 0;
+    let val = num;
+    let list = new LinkedList();
+
+    while (val >= 10 ** pow) {
+      let data = (val % 10 ** (pow + 1)) / 10 ** pow;
+      list.append(data);
+
+      val -= val % 10 ** (pow + 1);
+      pow += 1;
+    }
+
+    return list;
+  }
+
+  const sum = reduceList(listA) + reduceList(listB);
+  return expandToList(sum);
 }
