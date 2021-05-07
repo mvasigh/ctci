@@ -272,3 +272,18 @@ export function Q7_intersection(
     nodeB = nodeB.next;
   }
 }
+
+export function Q8_loopDetection(
+  list: LinkedList
+): Node | void {
+  const nodes = new Set();
+  let node = list.head;
+  while (node) {
+    if (nodes.has(node.next)) {
+      return node;
+    }
+
+    nodes.add(node);
+    node = node.next;
+  }
+}

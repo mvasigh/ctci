@@ -9,6 +9,7 @@ import {
   Q5_sumLists,
   Q6_palindrome,
   Q7_intersection,
+  Q8_loopDetection
 } from "./exercises.ts";
 
 Deno.test("Singly Linked List", () => {
@@ -169,3 +170,12 @@ Deno.test("Q7: Intersection", () => {
     undefined
   );
 });
+
+Deno.test('Q8: Loop Detection', () => {
+  const list = LinkedList.from([1, 2, 3]);
+  const node = new Node(22)
+  list.appendNode(node);
+  node.next = list.head;
+
+  asserts.assertEquals(Q8_loopDetection(list), node);
+})
