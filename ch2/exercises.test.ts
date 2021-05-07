@@ -8,6 +8,7 @@ import {
   Q4_partition,
   Q5_sumLists,
   Q6_palindrome,
+  Q7_intersection,
 } from "./exercises.ts";
 
 Deno.test("Singly Linked List", () => {
@@ -147,4 +148,24 @@ Deno.test("Q6: Palindrome", () => {
     const list = LinkedList.from(input.split(""));
     asserts.assertEquals(Q6_palindrome(list), expected);
   }
+});
+
+Deno.test("Q7: Intersection", () => {
+  // Intersecting example
+  let node = new Node(42);
+  let listA = LinkedList.from([1, 2, 3]);
+  listA.appendNode(node);
+  listA.append(4).append(3);
+
+  let listB = LinkedList.from([0, 1]);
+  listB.appendNode(node);
+  listB.append(1).append(3);
+
+  asserts.assertEquals(Q7_intersection(listA, listB), node);
+
+  // Non-intersecting example
+  asserts.assertEquals(
+    Q7_intersection(LinkedList.from([1, 3, 4]), LinkedList.from([1, 3, 5])),
+    undefined
+  );
 });

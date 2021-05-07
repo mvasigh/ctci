@@ -21,9 +21,11 @@ export class LinkedList {
     this.isDoublyLinked = isDoublyLinked;
   }
 
-  append(data: any) {
-    const node = new Node(data);
+  append(data: any): LinkedList {
+    return this.appendNode(new Node(data));
+  }
 
+  appendNode(node: Node): LinkedList {
     if (!this.head) {
       this.head = node;
     } else {
@@ -38,7 +40,6 @@ export class LinkedList {
     }
 
     this.tail = node;
-
     return this;
   }
 
@@ -246,4 +247,28 @@ export function Q6_palindrome(list: LinkedList): boolean {
   }
 
   return true;
+}
+
+export function Q7_intersection(
+  listA: LinkedList,
+  listB: LinkedList
+): Node | void {
+  if (!listA.head || !listB.head) {
+    return;
+  }
+
+  let nodes = new Set();
+  let nodeA: Node | undefined = listA.head;
+  while (nodeA) {
+    nodes.add(nodeA);
+    nodeA = nodeA.next;
+  }
+
+  let nodeB: Node | undefined = listB.head;
+  while (nodeB) {
+    if (nodes.has(nodeB)) {
+      return nodeB;
+    }
+    nodeB = nodeB.next;
+  }
 }
