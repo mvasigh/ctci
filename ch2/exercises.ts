@@ -196,7 +196,7 @@ export function Q5_sumLists(listA: LinkedList, listB: LinkedList): LinkedList {
     let pow = 0;
     let val = 0;
     let n = list.head;
-    
+
     while (n) {
       if (n.data >= 10 || n.data < 0) {
         throw new Error("Must be a single-digit integer");
@@ -227,4 +227,23 @@ export function Q5_sumLists(listA: LinkedList, listB: LinkedList): LinkedList {
 
   const sum = reduceList(listA) + reduceList(listB);
   return expandToList(sum);
+}
+
+export function Q6_palindrome(list: LinkedList): boolean {
+  if (!list.head || !list.tail) return false;
+
+  if (list.head.data !== list.tail.data) return false;
+
+  const arr = list.toArray();
+
+  for (let i = 0; i < arr.length; i++) {
+    let a = arr[i];
+    let b = arr[arr.length - i - 1];
+
+    if (a !== b) {
+      return false;
+    }
+  }
+
+  return true;
 }

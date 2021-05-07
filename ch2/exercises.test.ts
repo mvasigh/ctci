@@ -7,6 +7,7 @@ import {
   Q3_deleteMiddleNode,
   Q4_partition,
   Q5_sumLists,
+  Q6_palindrome,
 } from "./exercises.ts";
 
 Deno.test("Singly Linked List", () => {
@@ -51,7 +52,6 @@ Deno.test("Q1: Remove Dups", () => {
   for (let { original, expected } of tests) {
     const list = LinkedList.from(original);
     Q1_removeDups(list);
-    const listArr = list.toArray();
     asserts.assertEquals(list.toArray(), expected);
   }
 });
@@ -95,20 +95,56 @@ Deno.test("Q4: Partition", () => {
 Deno.test("Q5: Sum Lists", () => {
   const pairs = [
     {
-      input: [[0, 0, 1], [0,5]],
-      expected: [0, 5, 1]
+      input: [
+        [0, 0, 1],
+        [0, 5],
+      ],
+      expected: [0, 5, 1],
     },
     {
-      input: [[0, 1, 0], [2, 2]],
-      expected: [2, 3]
-    }
+      input: [
+        [0, 1, 0],
+        [2, 2],
+      ],
+      expected: [2, 3],
+    },
   ];
 
   for (let { input, expected } of pairs) {
-    const listA = LinkedList.from(input[0])
-    const listB = LinkedList.from(input[1])
-    const sum = Q5_sumLists(listA, listB)
+    const listA = LinkedList.from(input[0]);
+    const listB = LinkedList.from(input[1]);
+    const sum = Q5_sumLists(listA, listB);
 
     asserts.assertEquals(expected, sum.toArray());
+  }
+});
+
+Deno.test("Q6: Palindrome", () => {
+  const tests = [
+    {
+      input: "banana",
+      expected: false,
+    },
+    {
+      input: "racecar",
+      expected: true,
+    },
+    {
+      input: "",
+      expected: false,
+    },
+    {
+      input: "bccb",
+      expected: true,
+    },
+    {
+      input: "racebar",
+      expected: false,
+    },
+  ];
+
+  for (let { input, expected } of tests) {
+    const list = LinkedList.from(input.split(""));
+    asserts.assertEquals(Q6_palindrome(list), expected);
   }
 });
