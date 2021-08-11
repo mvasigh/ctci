@@ -1,3 +1,13 @@
+export class ListNode {
+  val: any;
+  next: ListNode | null;
+
+  constructor(val?: any) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
 export class NodeN {
   name: string;
   children: any[];
@@ -9,8 +19,8 @@ export class NodeN {
 }
 
 export class NodeBinary {
-  left?: NodeBinary;
-  right?: NodeBinary;
+  left?: NodeBinary | null;
+  right?: NodeBinary | null;
   data: any;
 
   constructor(data: any) {
@@ -93,4 +103,53 @@ export function graphFromString(input: string): Map<string, NodeN> {
   }
 
   return nodes;
+}
+
+export function Q1_routeBetweenNodes(nodeA: NodeN, nodeB: NodeN): boolean {
+  // Use a BFS approach since it is more optimal for finding a path between nodes
+  let visited = new Map<NodeN, boolean>();
+
+  // We are going to create a queue to use for our BFS
+  let queue = [];
+
+  // Accept nodeA as the root
+  let root = nodeA;
+  visited.set(root, true);
+  queue.push(root);
+
+  while (queue.length) {
+    let node = queue.shift();
+
+    if (node === nodeB) return true;
+
+    for (let adj of node?.children ?? []) {
+      if (!visited.get(adj)) {
+        visited.set(adj, true);
+        queue.push(adj);
+      }
+    }
+  }
+
+  return false;
+}
+
+export function Q2_minimalTree(integers: number[]): NodeBinary | null {
+  function createMinimalBst(
+    arr: number[],
+    start: number,
+    end: number
+  ): NodeBinary | null {
+    if (end < start) {
+      return null;
+    }
+
+    const mid = Math.floor((start + end) / 2);
+    const node = new NodeBinary(integers[mid]);
+    node.left = createMinimalBst(arr, start, mid - 1);
+    node.right = createMinimalBst(arr, mid + 1, end);
+
+    return node;
+  }
+
+  return createMinimalBst(integers, 0, integers.length - 1);
 }
