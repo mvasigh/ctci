@@ -2,15 +2,28 @@ const parent = (index: number) => Math.floor((index - 1) / 2);
 const leftChild = (index: number) => index * 2 + 1;
 const rightChild = (index: number) => index * 2 + 2;
 
-class MaxHeap {
-  _heap: number[];
+type Comparator = (a: any, b: any) => boolean;
 
-  constructor() {
+class Heap {
+  _heap: number[];
+  comparator: Comparator;
+
+  constructor(comparator: Comparator) {
     this._heap = [];
+    this.comparator = comparator;
   }
 
   isLeaf(index: number) {
-    return index >= Math.floor(this._heap.length / 2) && index < this._heap.length;
+    return (
+      index >= Math.floor(this._heap.length / 2) && index < this._heap.length
+    );
+  }
+
+  compare(a: number, b: number): boolean {
+    if (this._heap[a] == null) return false;
+    if (this._heap[b] == null) return true;
+
+    return this.comparator(this._heap[a], this._heap[b]);
   }
 
   swap(a: number, b: number) {
@@ -24,8 +37,8 @@ class MaxHeap {
     this.heapifyUp(this._heap.length - 1);
   }
 
-  extractMax(): number {
-    if (!this._heap.length) throw new Error('Heap is empty');
+  extract(): number {
+    if (!this._heap.length) throw new Error("Heap is empty");
 
     const max = this._heap[0];
     const last = this._heap.pop();
@@ -40,7 +53,7 @@ class MaxHeap {
     let currIndex = index;
     let parentIndex = parent(index);
 
-    while (currIndex > 0 && this._heap[currIndex] > this._heap[parentIndex]) {
+    while (currIndex > 0 && this.compare(currIndex, parentIndex)) {
       this.swap(currIndex, parentIndex);
       currIndex = parentIndex;
       parentIndex = parent(parentIndex);
@@ -52,19 +65,21 @@ class MaxHeap {
 
     let leftChildIndex = leftChild(index);
     let rightChildIndex = rightChild(index);
-    let largestIndex = index;
+    let currIndex = index;
 
-    if (this._heap[leftChildIndex] > this._heap[index]) {
-      largestIndex = leftChildIndex
+    if (this.compare(leftChildIndex, currIndex)) {
+      currIndex = leftChildIndex;
     }
 
-    if (this._heap[rightChildIndex] >= this._heap[index]) {
-      largestIndex = rightChildIndex;
+    if (this.compare(rightChildIndex, currIndex)) {
+      currIndex = rightChildIndex;
     }
 
-    if (largestIndex !== index) {
-      this.swap(largestIndex, index);
-      this.heapifyDown(largestIndex);
+    if (currIndex !== index) {
+      this.swap(currIndex, index);
+      this.heapifyDown(currIndex);
     }
   }
 }
+
+export default Heap;
