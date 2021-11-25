@@ -22,7 +22,7 @@ Deno.test("Min heap", () => {
     heap.add(v);
   }
 
-  const max = heap.extract();
+  const min = heap.extract();
 
-  asserts.assertEquals(max, 2);
+  asserts.assertEquals(min, 2);
 });
